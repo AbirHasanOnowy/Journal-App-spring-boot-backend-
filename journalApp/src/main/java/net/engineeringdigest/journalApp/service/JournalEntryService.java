@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
-@Document("Journal")
+@Component
 public class JournalEntryService {
 
     @Autowired
@@ -18,8 +18,14 @@ public class JournalEntryService {
     public List<JournalEntry> getAllEntry() {
         return journalEntryRepository.findAll();
     }
-
     public Optional<JournalEntry> getEntryById(String id) {
         return journalEntryRepository.findById(id);
     }
+    public void deleteEntryById(String id) {
+        journalEntryRepository.deleteById(id);
+    }
+    public JournalEntry saveEntry(JournalEntry newEntry) {
+        return journalEntryRepository.save(newEntry);
+    }
+
 }

@@ -1,15 +1,33 @@
 package net.engineeringdigest.journalApp.entity;
 
+import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDateTime;
+
+@Document("Journal")
 public class JournalEntry {
-    private int id;
+    @Id
+    private String id;
     private String title;
     private String content;
+    private LocalDateTime date;
 
-    public int getId() {
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
