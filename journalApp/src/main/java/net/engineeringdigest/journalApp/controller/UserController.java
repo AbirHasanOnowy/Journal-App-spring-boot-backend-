@@ -44,7 +44,7 @@ public class UserController {
                 return new ResponseEntity<>(userService.saveUser(userInDb),HttpStatus.OK);
             }
         } catch (Exception e) {
-            throw new RuntimeException("Username Already Taken.");
+            throw new RuntimeException("Username Already Taken. Error: "+e.getMessage());
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
