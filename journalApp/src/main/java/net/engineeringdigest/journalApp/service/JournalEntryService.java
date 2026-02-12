@@ -5,6 +5,7 @@ import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.repository.JournalEntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +26,7 @@ public class JournalEntryService {
         return journalEntryRepository.findById(id);
     }
 
-
+    @Transactional
     public void deleteEntryById(String id, String username) {
         try {
             User user = userService.getUserByUsername(username);
@@ -33,11 +34,11 @@ public class JournalEntryService {
             journalEntryRepository.deleteById(id);
             userService.saveUser(user);
         } catch (RuntimeException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error deleting entry. Error: "+e.getMessage());
         }
     }
 
-
+    @Transactional
     public JournalEntry saveEntry(JournalEntry newEntry, String username) {
         try {
             User user = userService.getUserByUsername(username);
@@ -46,7 +47,7 @@ public class JournalEntryService {
             userService.saveUser(user);
             return journalEntry;
         } catch (RuntimeException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error saving entry. Error: "+e.getMessage());
         }
     }
 
