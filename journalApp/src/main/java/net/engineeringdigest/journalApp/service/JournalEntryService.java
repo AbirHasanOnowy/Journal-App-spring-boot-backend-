@@ -32,7 +32,7 @@ public class JournalEntryService {
             User user = userService.getUserByUsername(username);
             user.getJournalEntries().removeIf(entry -> entry.getId().equals(id));
             journalEntryRepository.deleteById(id);
-            userService.saveUser(user);
+            userService.updateUser(user);
         } catch (RuntimeException e) {
             throw new RuntimeException("Error deleting entry. Error: "+e.getMessage());
         }
@@ -44,7 +44,7 @@ public class JournalEntryService {
             User user = userService.getUserByUsername(username);
             JournalEntry journalEntry = journalEntryRepository.save(newEntry);
             user.getJournalEntries().add(journalEntry);
-            userService.saveUser(user);
+            userService.updateUser(user);
             return journalEntry;
         } catch (RuntimeException e) {
             throw new RuntimeException("Error saving entry. Error: "+e.getMessage());

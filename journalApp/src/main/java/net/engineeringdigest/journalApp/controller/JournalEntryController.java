@@ -24,6 +24,7 @@ public class JournalEntryController {
     @Autowired
     private UserService userService;
 
+    //get all entries of the user
     @GetMapping
     public ResponseEntity<List<JournalEntry>> getAllJournalEntriesOfUser() {
         try {
@@ -51,7 +52,11 @@ public class JournalEntryController {
 
     @GetMapping("/id/{id}")
     public ResponseEntity<?> getEntryById(@PathVariable String id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
         Optional<JournalEntry> journalEntry = journalEntryService.getEntryById(id);
+        User user = userService.getUserByUsername(username);
+//        user.getJournalEntries().contains(id)
         if(journalEntry.isPresent()) return new ResponseEntity<>(journalEntry.get(),HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

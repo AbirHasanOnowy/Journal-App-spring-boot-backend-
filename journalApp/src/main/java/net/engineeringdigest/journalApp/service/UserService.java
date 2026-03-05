@@ -30,6 +30,11 @@ public class UserService {
         newUser.setRoles(Collections.singletonList("USER"));
         return userRepository.save(newUser);
     }
+
+    public User updateUser(User newUser) {
+        return userRepository.save(newUser);
+    }
+
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
